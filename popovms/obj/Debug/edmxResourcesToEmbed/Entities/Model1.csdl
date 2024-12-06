@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="practicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="middlename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="seria" Type="Int32" />
+    <Property Name="number" Type="Int32" />
+    <Property Name="date_birth" Type="DateTime" Precision="0" />
+    <Property Name="indexs" Type="Int32" />
+    <Property Name="address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="orders" Relationship="practicaModel.FK__orders__id_clien__29221CFB" FromRole="client" ToRole="orders" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="employee" Relationship="practicaModel.FK__employee__id_pos__0A9D95DB" FromRole="post" ToRole="employee" />
+  </EntityType>
+  <EntityType Name="services">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="cod" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Cost" Type="Int32" />
+    <NavigationProperty Name="services_orders" Relationship="practicaModel.FK__services___id_se__2DE6D218" FromRole="services" ToRole="services_orders" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="orders" Relationship="practicaModel.FK__orders__id_statu__2A164134" FromRole="status" ToRole="orders" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="type_entrance">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="employee" Relationship="practicaModel.FK__employee__type_e__0B91BA14" FromRole="type_entrance" ToRole="employee" />
+  </EntityType>
+  <EntityContainer Name="practicaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="client" EntityType="Self.client" />
+    <EntitySet Name="post" EntityType="Self.post" />
+    <EntitySet Name="services" EntityType="Self.services" />
+    <EntitySet Name="status" EntityType="Self.status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="type_entrance" EntityType="Self.type_entrance" />
+    <EntitySet Name="employee" EntityType="practicaModel.employee" />
+    <AssociationSet Name="FK__employee__id_pos__0A9D95DB" Association="practicaModel.FK__employee__id_pos__0A9D95DB">
+      <End Role="post" EntitySet="post" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK__employee__type_e__0B91BA14" Association="practicaModel.FK__employee__type_e__0B91BA14">
+      <End Role="type_entrance" EntitySet="type_entrance" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <EntitySet Name="orders" EntityType="practicaModel.orders" />
+    <EntitySet Name="services_orders" EntityType="practicaModel.services_orders" />
+    <AssociationSet Name="FK__orders__id_clien__29221CFB" Association="practicaModel.FK__orders__id_clien__29221CFB">
+      <End Role="client" EntitySet="client" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_statu__2A164134" Association="practicaModel.FK__orders__id_statu__2A164134">
+      <End Role="status" EntitySet="status" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__services___id_or__2CF2ADDF" Association="practicaModel.FK__services___id_or__2CF2ADDF">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="services_orders" EntitySet="services_orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__services___id_se__2DE6D218" Association="practicaModel.FK__services___id_se__2DE6D218">
+      <End Role="services" EntitySet="services" />
+      <End Role="services_orders" EntitySet="services_orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_post" Type="Int32" />
+    <Property Name="surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="middlename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Last_entry" Type="DateTime" Precision="3" />
+    <Property Name="type_entrance" Type="Int32" />
+    <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="post" Relationship="practicaModel.FK__employee__id_pos__0A9D95DB" FromRole="employee" ToRole="post" />
+    <NavigationProperty Name="type_entrance1" Relationship="practicaModel.FK__employee__type_e__0B91BA14" FromRole="employee" ToRole="type_entrance" />
+  </EntityType>
+  <Association Name="FK__employee__id_pos__0A9D95DB">
+    <End Type="practicaModel.post" Role="post" Multiplicity="0..1" />
+    <End Type="practicaModel.employee" Role="employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="id_post" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__employee__type_e__0B91BA14">
+    <End Type="practicaModel.type_entrance" Role="type_entrance" Multiplicity="0..1" />
+    <End Type="practicaModel.employee" Role="employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="type_entrance">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="type_entrance" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date_add" Type="DateTime" Precision="0" />
+    <Property Name="time_orders" Type="Time" Precision="7" />
+    <Property Name="id_client" Type="Int32" />
+    <Property Name="id_status" Type="Int32" />
+    <Property Name="date_closing" Type="DateTime" Precision="0" />
+    <Property Name="time_rental" Type="Int32" />
+    <NavigationProperty Name="client" Relationship="practicaModel.FK__orders__id_clien__29221CFB" FromRole="orders" ToRole="client" />
+    <NavigationProperty Name="status" Relationship="practicaModel.FK__orders__id_statu__2A164134" FromRole="orders" ToRole="status" />
+    <NavigationProperty Name="services_orders" Relationship="practicaModel.FK__services___id_or__2CF2ADDF" FromRole="orders" ToRole="services_orders" />
+  </EntityType>
+  <EntityType Name="services_orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_orders" Type="Int32" />
+    <Property Name="id_services" Type="Int32" />
+    <NavigationProperty Name="orders" Relationship="practicaModel.FK__services___id_or__2CF2ADDF" FromRole="services_orders" ToRole="orders" />
+    <NavigationProperty Name="services" Relationship="practicaModel.FK__services___id_se__2DE6D218" FromRole="services_orders" ToRole="services" />
+  </EntityType>
+  <Association Name="FK__orders__id_clien__29221CFB">
+    <End Type="practicaModel.client" Role="client" Multiplicity="0..1" />
+    <End Type="practicaModel.orders" Role="orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_statu__2A164134">
+    <End Type="practicaModel.status" Role="status" Multiplicity="0..1" />
+    <End Type="practicaModel.orders" Role="orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="status">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__services___id_or__2CF2ADDF">
+    <End Type="practicaModel.orders" Role="orders" Multiplicity="0..1" />
+    <End Type="practicaModel.services_orders" Role="services_orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="services_orders">
+        <PropertyRef Name="id_orders" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__services___id_se__2DE6D218">
+    <End Type="practicaModel.services" Role="services" Multiplicity="0..1" />
+    <End Type="practicaModel.services_orders" Role="services_orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="services">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="services_orders">
+        <PropertyRef Name="id_services" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

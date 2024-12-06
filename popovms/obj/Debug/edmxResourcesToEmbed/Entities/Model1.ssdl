@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище practicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="surname" Type="varchar" MaxLength="100" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="middlename" Type="varchar" MaxLength="100" />
+    <Property Name="seria" Type="int" />
+    <Property Name="number" Type="int" />
+    <Property Name="date_birth" Type="date" />
+    <Property Name="indexs" Type="int" />
+    <Property Name="address" Type="varchar" MaxLength="250" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="password" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_post" Type="int" />
+    <Property Name="surname" Type="varchar" MaxLength="100" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="middlename" Type="varchar" MaxLength="100" />
+    <Property Name="login" Type="varchar" MaxLength="100" />
+    <Property Name="password" Type="varchar" MaxLength="255" />
+    <Property Name="Last_entry" Type="datetime" />
+    <Property Name="type_entrance" Type="int" />
+    <Property Name="image" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_add" Type="date" />
+    <Property Name="time_orders" Type="time" Precision="7" />
+    <Property Name="id_client" Type="int" />
+    <Property Name="id_status" Type="int" />
+    <Property Name="date_closing" Type="date" />
+    <Property Name="time_rental" Type="int" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="services">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="cod" Type="varchar" MaxLength="100" />
+    <Property Name="Cost" Type="int" />
+  </EntityType>
+  <EntityType Name="services_orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_orders" Type="int" />
+    <Property Name="id_services" Type="int" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="type_entrance">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK__employee__id_pos__0A9D95DB">
+    <End Role="post" Type="Self.post" Multiplicity="0..1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="id_post" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__employee__type_e__0B91BA14">
+    <End Role="type_entrance" Type="Self.type_entrance" Multiplicity="0..1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="type_entrance">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="type_entrance" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_clien__29221CFB">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_statu__2A164134">
+    <End Role="status" Type="Self.status" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="status">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__services___id_or__2CF2ADDF">
+    <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+    <End Role="services_orders" Type="Self.services_orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="services_orders">
+        <PropertyRef Name="id_orders" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__services___id_se__2DE6D218">
+    <End Role="services" Type="Self.services" Multiplicity="0..1" />
+    <End Role="services_orders" Type="Self.services_orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="services">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="services_orders">
+        <PropertyRef Name="id_services" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище practicaModelContainer">
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="services" EntityType="Self.services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="services_orders" EntityType="Self.services_orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="type_entrance" EntityType="Self.type_entrance" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__employee__id_pos__0A9D95DB" Association="Self.FK__employee__id_pos__0A9D95DB">
+      <End Role="post" EntitySet="post" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK__employee__type_e__0B91BA14" Association="Self.FK__employee__type_e__0B91BA14">
+      <End Role="type_entrance" EntitySet="type_entrance" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_clien__29221CFB" Association="Self.FK__orders__id_clien__29221CFB">
+      <End Role="client" EntitySet="client" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_statu__2A164134" Association="Self.FK__orders__id_statu__2A164134">
+      <End Role="status" EntitySet="status" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__services___id_or__2CF2ADDF" Association="Self.FK__services___id_or__2CF2ADDF">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="services_orders" EntitySet="services_orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__services___id_se__2DE6D218" Association="Self.FK__services___id_se__2DE6D218">
+      <End Role="services" EntitySet="services" />
+      <End Role="services_orders" EntitySet="services_orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
